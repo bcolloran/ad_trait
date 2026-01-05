@@ -10,11 +10,10 @@ use alloc::{format, vec};
 use core::marker::PhantomData;
 use nalgebra::{DMatrix, DVector};
 #[cfg(feature = "std")]
-use rand::distributions::Distribution;
+use rand::distr::Distribution;
 #[cfg(feature = "std")]
-use rand::distributions::Uniform;
-#[cfg(feature = "std")]
-use rand::thread_rng;
+use rand::distr::Uniform;
+
 #[cfg(feature = "std")]
 use rand::Rng;
 #[cfg(feature = "std")]
@@ -889,8 +888,8 @@ pub fn math_mod(a: i32, b: i32) -> i32 {
 
 #[cfg(feature = "std")]
 pub(crate) fn get_tangent_matrix(n: usize, orthogonal: bool) -> DMatrix<f64> {
-    let mut rng = thread_rng();
-    let uniform = Uniform::new(-1.0, 1.0);
+    let mut rng = rand::rng();
+    let uniform = Uniform::new(-1.0, 1.0).unwrap();
 
     let t = DMatrix::<f64>::from_fn(n, n, |_, _| uniform.sample(&mut rng));
 
@@ -1323,13 +1322,13 @@ impl DerivativeMethodTrait for SPSA {
     ) -> (Vec<f64>, DMatrix<f64>) {
         let f0 = function.call(inputs, false);
 
-        let mut rng = rand::thread_rng();
+        let mut rng = rand::rng();
 
         let epsilon = 0.00000001;
 
         let r: Vec<f64> = (0..inputs.len())
             .into_iter()
-            .map(|_x| rng.gen_range(-1.0..=1.0))
+            .map(|_x| rng.random_range(-1.0..=1.0))
             .collect();
         let x = DVector::from_column_slice(inputs);
         let delta_k = DVector::from_column_slice(&r);
