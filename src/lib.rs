@@ -156,7 +156,7 @@ use core::fmt::{Debug, Display};
 use core::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Rem, RemAssign, Sub, SubAssign};
 use nalgebra::{Dim, Matrix, RawStorageMut, Scalar};
 use ndarray::{ArrayBase, Dimension, OwnedRepr, ScalarOperand};
-use num_traits::Signed;
+pub use num_traits::Signed;
 use serde::de::DeserializeOwned;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use serde_with::{DeserializeAs, SerializeAs};
